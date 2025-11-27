@@ -10,7 +10,7 @@ const Page = () => {
                 <p className="text-center mt-5">Hackathons, Meetups and Conferences, All in One Place</p>
                 <ExploreBtn/>
 
-                <div className="events">
+                <div className="mt-20 space-y-7">
                     <h3>Featured Events</h3>
 
                     <ul className="events">
