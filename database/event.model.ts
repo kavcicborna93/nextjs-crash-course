@@ -143,7 +143,7 @@ EventSchema.pre('save', async function () {
         }
     }
     if (this.isModified('time')) {
-        const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+        const timeRegex = /^([01][0-9]|2[0-3]):[0-5][0-9]$/;
         if (!timeRegex.test(this.time)) {
             throw new Error('Time must be in HH:MM format');
         }
