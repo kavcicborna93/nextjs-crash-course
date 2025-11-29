@@ -10,13 +10,16 @@ declare global {
 }
 
 // Get MongoDB URI from environment variables
-const MONGODB_URI: string  = process.env.MONGODB_URI!;
+const envUri = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error(
-    'Please define the MONGODB_URI environment variable inside .env.local'
-  );
+if (!envUri) {
+    throw new Error(
+        'Please define the MONGODB_URI environment variable inside .env.local'
+    );
 }
+
+// After validation, assign to a typed constant
+const MONGODB_URI: string = envUri;
 
 /**
  * Global cache to prevent multiple connections during development.
