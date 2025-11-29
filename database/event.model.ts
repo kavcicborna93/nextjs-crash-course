@@ -113,13 +113,22 @@ EventSchema.index({ slug: 1 }, { unique: true });
  */
 EventSchema.pre('save', async function () {
     if (this.isModified('title')) {
-        this.slug = this.title
+        let baseSlug = this.title
             .toLowerCase()
             .trim()
             .replace(/[^\w\s-]/g, '')
             .replace(/\s+/g, '-')
             .replace(/--+/g, '-')
             .replace(/^-+|-+$/g, '');
+
+        let slug = baseSlug;
+        let counter = 1;
+        const Event = mongoose.models.Event || this.constructor;
+
+        while (await Event.exists({ slug, _id: { $ne: this._id } })) {
+            slug = `${baseSlug}-${counter++}`;
+        }
+        this.slug = slug;
     }
 
     if (this.isModified('date')) {
