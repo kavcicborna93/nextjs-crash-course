@@ -1,12 +1,10 @@
 import ExploreBtn from "@/components/ExploreBtn";
 import EventCard from "@/components/EventCard";
-import {events} from "@/lib/constants";
 import {IEvent} from "@/database";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Page = async () => {
-    console.log(`${BASE_URL}/api/events`);
     const response = await fetch(`${BASE_URL}/api/events`);
     const { events } = await response.json();
 
