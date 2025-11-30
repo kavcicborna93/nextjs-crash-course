@@ -5,6 +5,10 @@ import {v2 as cloudinary} from 'cloudinary';
 
 export async function POST(req: NextRequest) {
     try {
+        if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+            return NextResponse.json({message: 'Cloudinary configuration missing'}, {status: 500});
+        }
+
         // connect to DB //
         await connectDB();
 
