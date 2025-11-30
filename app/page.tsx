@@ -6,7 +6,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Page = async () => {
     const response = await fetch(`${BASE_URL}/api/events`);
-    const { events } = await response.json();
+    const {events} = await response.json();
 
     return (
         <div>
@@ -19,7 +19,8 @@ const Page = async () => {
                     <h3>Featured Events</h3>
 
                     <ul className="events">
-                        {events && events.length > 0 && events.map((event: IEvent) => <li key={event.slug}>
+                        {events && events.length > 0 && events.map((event: IEvent) => <li key={event.slug}
+                                                                                          className="list-none">
                             <EventCard {...event} />
                         </li>)}
                     </ul>
