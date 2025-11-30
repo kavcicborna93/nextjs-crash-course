@@ -27,5 +27,5 @@ export async function GET(req: NextRequest, {params}: RouteParams) {
         }
     }
 
-    return NextResponse.json({message: 'An unexpected error occured'}, {status:500});
+    return NextResponse.json({message: 'An unexpected error occurred'}, {status: 500});
 }
