@@ -1,6 +1,7 @@
 import React from 'react';
 import {notFound} from "next/navigation";
 import Image from "next/image";
+import BookEvent from "@/components/BookEvent";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -37,6 +38,8 @@ const EventDetailsPage = async ({params}: { params: Promise<{ slug: string }> })
     const {event: {description, image, overview, date, time, location, mode, agenda, audience, organizer, tags}} = await request.json();
 
     if (!description) return notFound();
+
+    const bookings = 10;
     return (
         <section id="event">
             <div className="header">
@@ -73,7 +76,18 @@ const EventDetailsPage = async ({params}: { params: Promise<{ slug: string }> })
                     <EventTags tags={JSON.parse(tags[0])}></EventTags>
                 </div>
                 <aside className="booking">
-                    <p className={"text-lg font-semibold"}>Book Event</p>
+                    <h2>Book Your Spot</h2>
+                    {bookings > 0 ? (
+                        <p className="text-sm">
+                            Join {bookings} people who have already booked their spot
+                        </p>
+                    ): (
+                        <p className="text-sm">
+                            Be the first to book your spot!
+                        </p>
+                    )}
+
+                    <BookEvent></BookEvent>
                 </aside>
             </div>
         </section>
