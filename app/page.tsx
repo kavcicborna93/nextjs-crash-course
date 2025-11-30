@@ -1,8 +1,38 @@
 import ExploreBtn from "@/components/ExploreBtn";
 import EventCard from "@/components/EventCard";
-import {events} from "@/lib/constants";
+import {IEvent} from "@/database";
+import {cacheLife} from "next/cache";
 
-const Page = () => {
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+const Page = async () => {
+    if (!BASE_URL) {
+        throw new Error('NEXT_PUBLIC_BASE_URL environment variable is not configured');
+    }
+
+    'use cache';
+
+const Page = async () => {
+    'use cache';
+    cacheLife('hours');
+    let events = [];
+    
+    try {
+        const response = await fetch(`${BASE_URL}/api/events`, {
+            next: { revalidate: 3600 } // Cache for 1 hour
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Failed to fetch events: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        events = data.events || [];
+    } catch (error) {
+        console.error('Error fetching events:', error);
+        // Return empty array to show empty state instead of crashing
+    }
+
     return (
         <div>
             <section>
@@ -14,7 +44,8 @@ const Page = () => {
                     <h3>Featured Events</h3>
 
                     <ul className="events">
-                        {events.map(event => <li key={event.title}>
+                        {events && events.length > 0 && events.map((event: IEvent) => <li key={event.slug}
+                                                                                          className="list-none">
                             <EventCard {...event} />
                         </li>)}
                     </ul>
