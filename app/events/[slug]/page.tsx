@@ -91,7 +91,9 @@ const EventDetailsPage = async ({params}: { params: Promise<{ slug: string }> })
                         <p>{organizer}</p>
                     </section>
 
-                    <EventTags tags={tags}></EventTags>
+                    {tags && Array.isArray(tags) && tags.length > 0 && (
+                        <EventTags tags={tags}></EventTags>
+                    )}
                 </div>
                 <aside className="booking">
                     <h2>Book Your Spot</h2>
