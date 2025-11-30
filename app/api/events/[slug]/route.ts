@@ -14,7 +14,7 @@ export async function GET(req: NextRequest, {params}: RouteParams) {
         const event = await Event.findOne(slug).lean();
 
         if (!event) {
-            return NextResponse.json({error: "Event not found"}, {status:400});
+            return NextResponse.json({error: "Event not found"}, {status: 404});
         }
 
         return NextResponse.json({message: 'Event fetched successfully', event}, {status: 200});
