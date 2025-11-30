@@ -6,6 +6,13 @@ import {cacheLife} from "next/cache";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const Page = async () => {
+    if (!BASE_URL) {
+        throw new Error('NEXT_PUBLIC_BASE_URL environment variable is not configured');
+    }
+
+    'use cache';
+
+const Page = async () => {
     'use cache';
     cacheLife('hours');
     const response = await fetch(`${BASE_URL}/api/events`);
