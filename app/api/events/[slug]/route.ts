@@ -10,22 +10,27 @@ export async function GET(req: NextRequest, {params}: RouteParams) {
         await connectDB();
         const slug = await params;
         // return sorted events, newer first //
-        console.log(slug);
         const event = await Event.findOne(slug).lean();
 
         if (!event) {
-            return NextResponse.json({error: "Event not found"}, {status:400});
+            return NextResponse.json({error: "Event not found"}, {status: 404});
         }
 
         return NextResponse.json({message: 'Event fetched successfully', event}, {status: 200});
     } catch (e) {
         if (e instanceof Error) {
             if (e.message.includes('MONGODB_URI')) {
-                return NextResponse.json({error:"Database configuration error"});
+                return NextResponse.json(
+                    { error: "Database configuration error" },
+                    { status: 500 }
+                );
             }
-            return NextResponse.json({message: 'Event fetching failed', error: e}, {status: 500});
+            return NextResponse.json(
+                { message: "Event fetching failed", error: e.message },
+                { status: 500 }
+            );
         }
     }
 
-    return NextResponse.json({message: 'An unexpected error occured'}, {status:500});
+    return NextResponse.json({message: 'An unexpected error occurred'}, {status: 500});
 }
