@@ -82,7 +82,9 @@ const EventDetailsPage = async ({params}: { params: Promise<{ slug: string }> })
                         <EventDetailItem icon="/icons/audience.svg" alt="calendar" label={audience}></EventDetailItem>
                     </section>
 
-                    <EventAgenda agendaItems={agenda}></EventAgenda>
+                    {agenda && Array.isArray(agenda) && agenda.length > 0 && (
+                        <EventAgenda agendaItems={agenda}></EventAgenda>
+                    )}
 
                     <section className="flex-col-gap-2">
                         <h2>About the organizer</h2>
