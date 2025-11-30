@@ -15,8 +15,23 @@ const Page = async () => {
 const Page = async () => {
     'use cache';
     cacheLife('hours');
-    const response = await fetch(`${BASE_URL}/api/events`);
-    const {events} = await response.json();
+    let events = [];
+    
+    try {
+        const response = await fetch(`${BASE_URL}/api/events`, {
+            next: { revalidate: 3600 } // Cache for 1 hour
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Failed to fetch events: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        events = data.events || [];
+    } catch (error) {
+        console.error('Error fetching events:', error);
+        // Return empty array to show empty state instead of crashing
+    }
 
     return (
         <div>
