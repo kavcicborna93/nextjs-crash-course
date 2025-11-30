@@ -8,8 +8,9 @@ type RouteParams = {
 export async function GET(req: NextRequest, {params}: RouteParams) {
     try {
         await connectDB();
-        const slug = await {params};
+        const slug = await params;
         // return sorted events, newer first //
+        console.log(slug);
         const event = await Event.findOne(slug).lean();
 
         if (!event) {
