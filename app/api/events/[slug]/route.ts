@@ -20,9 +20,15 @@ export async function GET(req: NextRequest, {params}: RouteParams) {
     } catch (e) {
         if (e instanceof Error) {
             if (e.message.includes('MONGODB_URI')) {
-                return NextResponse.json({error:"Database configuration error"});
+                return NextResponse.json(
+                    { error: "Database configuration error" },
+                    { status: 500 }
+                );
             }
-            return NextResponse.json({message: 'Event fetching failed', error: e}, {status: 500});
+            return NextResponse.json(
+                { message: "Event fetching failed", error: e.message },
+                { status: 500 }
+            );
         }
     }
 
