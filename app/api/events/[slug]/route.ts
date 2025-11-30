@@ -10,7 +10,6 @@ export async function GET(req: NextRequest, {params}: RouteParams) {
         await connectDB();
         const slug = await params;
         // return sorted events, newer first //
-        console.log(slug);
         const event = await Event.findOne(slug).lean();
 
         if (!event) {
